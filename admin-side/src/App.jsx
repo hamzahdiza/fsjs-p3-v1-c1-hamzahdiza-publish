@@ -1,13 +1,12 @@
 import { useState } from "react";
 import "./App.css";
-import Dashboard from "./assets/pages/Dashboard";
+// import Dashboard from "./pages/Dashboard";
+// import Sidebar from "./components/Sidebar";
+import { RouterProvider } from "react-router-dom";
+import router from "./routes";
 
 function App() {
-  return (
-    <body class="bg-gray-100 font-family-karla flex">
-      <Dashboard />
-    </body>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

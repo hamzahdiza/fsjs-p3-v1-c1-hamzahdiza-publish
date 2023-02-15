@@ -1,17 +1,14 @@
-import { useState } from "react";
-import Products from "./pages/Products";
-import Navbar from "./components/Navbar";
-import DetailProduct from "./pages/DetailProduct";
+// import { useState } from "react";
+import { RouterProvider } from "react-router-dom";
+// import Products from "./pages/Products";
+// import Navbar from "./components/Navbar";
+// import DetailProduct from "./pages/DetailProduct";
+import router from "./routes";
+
 import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <Navbar />
-      <Products />
-      {/* <DetailProduct /> */}
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

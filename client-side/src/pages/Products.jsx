@@ -1,7 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../App.css";
+import useFetch from "../hooks/useFetch";
+import CardProduct from "../components/CardProduct";
 
 function Products() {
+  const { data } = useFetch("http://localhost:3000/products");
+  const dataCategories = useFetch("http://localhost:3000/categories");
+  console.log(dataCategories.data, "============");
+
   return (
     <div className="Products">
       {/* Products */}
@@ -299,7 +305,7 @@ function Products() {
 
                 <details className="overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
                   <summary className="flex items-center justify-between gap-2 p-4 text-gray-900 transition cursor-pointer">
-                    <span className="text-sm font-medium"> Colors </span>
+                    <span className="text-sm font-medium"> Categories </span>
 
                     <span className="transition group-open:-rotate-180">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
@@ -318,51 +324,24 @@ function Products() {
                     </header>
 
                     <ul className="p-4 space-y-1 border-t border-gray-200">
+                      {/* Categories sidebar =========== */}
+                      {dataCategories.data.map((category) => {
+                        <div key={category.id}>
+                          <li>
+                            <label htmlFor="FilterRed" className="inline-flex items-center gap-2">
+                              <input type="checkbox" id="FilterRed" className="w-5 h-5 border-gray-300 rounded" />
+
+                              <span className="text-sm font-medium text-gray-700">{category.name}</span>
+                            </label>
+                          </li>
+                          ;
+                        </div>;
+                      })}
                       <li>
                         <label htmlFor="FilterRed" className="inline-flex items-center gap-2">
                           <input type="checkbox" id="FilterRed" className="w-5 h-5 border-gray-300 rounded" />
 
                           <span className="text-sm font-medium text-gray-700">Red</span>
-                        </label>
-                      </li>
-
-                      <li>
-                        <label htmlFor="FilterBlue" className="inline-flex items-center gap-2">
-                          <input type="checkbox" id="FilterBlue" className="w-5 h-5 border-gray-300 rounded" />
-
-                          <span className="text-sm font-medium text-gray-700">Blue</span>
-                        </label>
-                      </li>
-
-                      <li>
-                        <label htmlFor="FilterGreen" className="inline-flex items-center gap-2">
-                          <input type="checkbox" id="FilterGreen" className="w-5 h-5 border-gray-300 rounded" />
-
-                          <span className="text-sm font-medium text-gray-700">Green</span>
-                        </label>
-                      </li>
-
-                      <li>
-                        <label htmlFor="FilterOrange" className="inline-flex items-center gap-2">
-                          <input type="checkbox" id="FilterOrange" className="w-5 h-5 border-gray-300 rounded" />
-
-                          <span className="text-sm font-medium text-gray-700">Orange</span>
-                        </label>
-                      </li>
-
-                      <li>
-                        <label htmlFor="FilterPurple" className="inline-flex items-center gap-2">
-                          <input type="checkbox" id="FilterPurple" className="w-5 h-5 border-gray-300 rounded" />
-
-                          <span className="text-sm font-medium text-gray-700">Purple</span>
-                        </label>
-                      </li>
-
-                      <li>
-                        <label htmlFor="FilterTeal" className="inline-flex items-center gap-2">
-                          <input type="checkbox" id="FilterTeal" className="w-5 h-5 border-gray-300 rounded" />
-
-                          <span className="text-sm font-medium text-gray-700">Teal</span>
                         </label>
                       </li>
                     </ul>
@@ -374,23 +353,12 @@ function Products() {
 
           <div className="lg:col-span-4">
             <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              <li>
-                <a href="#" className="block overflow-hidden group">
-                  <img src="https://cdn.shopify.com/s/files/1/0607/2841/0296/products/e6c500da181441d2b828c7562762b207_tplv-o3syd03w52-origin-jpeg_354db1a7-233b-43e6-a5f7-153882e6b897.jpg?v=1676046830" alt="" className="h-[300px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[350px]" />
+              {/* Card Product =================== */}
+              {data.map((product) => {
+                return <CardProduct product={product} key={product.id} />;
+              })}
 
-                  <div className="relative pt-3 bg-white">
-                    <h3 className="text-m font-bold text-gray-700 group-hover:underline group-hover:underline-offset-4">Erigo Kemeja Flannel Emily Cream</h3>
-
-                    <p className="mt-2">
-                      <span className="sr-only"> Regular Price </span>
-
-                      <span className="tracking-wider text-gray-900"> Rp 130000 </span>
-                    </p>
-                  </div>
-                </a>
-              </li>
-
-              <li>
+              {/* <li>
                 <a href="#" className="block overflow-hidden group">
                   <img src="https://cdn.shopify.com/s/files/1/0607/2841/0296/products/e6c500da181441d2b828c7562762b207_tplv-o3syd03w52-origin-jpeg_354db1a7-233b-43e6-a5f7-153882e6b897.jpg?v=1676046830" alt="" className="h-[300px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[350px]" />
 
@@ -436,7 +404,7 @@ function Products() {
                     </p>
                   </div>
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

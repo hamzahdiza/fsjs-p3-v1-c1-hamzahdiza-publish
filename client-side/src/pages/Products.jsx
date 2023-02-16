@@ -1,12 +1,53 @@
 import { useState, useEffect } from "react";
 import "../App.css";
-import useFetch from "../hooks/useFetch";
+// import useFetch from "../hooks/useFetch";
 import CardProduct from "../components/CardProduct";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchProducts } from "../store/actions/actionCreator";
 
 function Products() {
-  const { data } = useFetch("http://localhost:3000/products");
-  const dataCategories = useFetch("http://localhost:3000/categories");
-  console.log(dataCategories.data, "============");
+  // const { data } = useFetch("http://localhost:3000/products");
+  // const dataCategories = useFetch("http://localhost:3000/categories");
+  // console.log(dataCategories.data, "============");
+
+  const { isLoading, products, errorMsg: error } = useSelector((state) => state.product);
+
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       await dispatch(fetchProducts());
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   })();
+  // }, []);
+
+  // useEffect(() => {
+  //   fetchProduct();
+  // }, []);
+
+  // const fetchProduct = async () => {
+  //   try {
+  //     await dispatch(fetchProducts());
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, []);
+
+  if (isLoading) {
+    return (
+      <section>
+        <h1 className="animate-pulse text-red-400 text-3xl">Loading ...</h1>
+      </section>
+    );
+  }
+
+  console.log(products);
 
   return (
     <div className="Products">
@@ -325,7 +366,7 @@ function Products() {
 
                     <ul className="p-4 space-y-1 border-t border-gray-200">
                       {/* Categories sidebar =========== */}
-                      {dataCategories.data.map((category) => {
+                      {/* {dataCategories.data.map((category) => {
                         <div key={category.id}>
                           <li>
                             <label htmlFor="FilterRed" className="inline-flex items-center gap-2">
@@ -336,7 +377,7 @@ function Products() {
                           </li>
                           ;
                         </div>;
-                      })}
+                      })} */}
                       <li>
                         <label htmlFor="FilterRed" className="inline-flex items-center gap-2">
                           <input type="checkbox" id="FilterRed" className="w-5 h-5 border-gray-300 rounded" />
@@ -354,7 +395,7 @@ function Products() {
           <div className="lg:col-span-4">
             <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {/* Card Product =================== */}
-              {data.map((product) => {
+              {products.map((product) => {
                 return <CardProduct product={product} key={product.id} />;
               })}
 

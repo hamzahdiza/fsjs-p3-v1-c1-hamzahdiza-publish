@@ -3,6 +3,7 @@ import Products from "../pages/Products";
 import Navbar from "../components/Navbar";
 import Layout from "../pages/Layout";
 import DetailProduct from "../pages/DetailProduct";
+import Login from "../pages/Login";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
         element: <DetailProduct />,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
 

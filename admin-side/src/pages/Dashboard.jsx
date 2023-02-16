@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import useFetch from "../hooks/useFetch";
 import TableProduct from "../components/TableProduct";
+import ImagePopup from "../components/ImagePopup";
+import { Link } from "react-router-dom";
 
 function Dashboard() {
   const dataProducts = useFetch("http://localhost:3000/products");
@@ -8,7 +10,16 @@ function Dashboard() {
   return (
     <div className="Dashboard ">
       <div className="items-center mt-[60px] w-[1200px] p-8">
-        <h1 className="font-bold mb-5 text-[45px] ml-7">Dashboard</h1>
+        <div className="flex mb-5 w-[1200px]">
+          <h1 className="font-bold text-[45px] ml-7 my-auto">Dashboard</h1>
+          <div className="whitespace-nowrap px-2 py-2 text-gray-700 my-auto ml-[770px]">
+            <Link to={"/product/add-product"}>
+              <a href="#" className=" inline-block rounded bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-blue-700">
+                Add Product
+              </a>
+            </Link>
+          </div>
+        </div>
         <div className="overflow-x-auto ml-7">
           <table className="w-[1400px] divide-y-2 divide-gray-200 text-sm">
             <thead>
@@ -58,6 +69,7 @@ function Dashboard() {
           </table>
         </div>
       </div>
+      {/* <ImagePopup /> */}
     </div>
   );
 }

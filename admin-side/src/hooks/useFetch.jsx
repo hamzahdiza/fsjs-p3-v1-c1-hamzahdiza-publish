@@ -6,7 +6,7 @@ function useFetch(url) {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(url);
+        const response = await fetch("http://localhost:3000/products");
         const responseJson = await response.json();
         setData(responseJson);
       } catch (err) {

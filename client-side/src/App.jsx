@@ -1,14 +1,20 @@
 // import { useState } from "react";
 import { RouterProvider } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./store";
+import router from "./routes";
 // import Products from "./pages/Products";
 // import Navbar from "./components/Navbar";
 // import DetailProduct from "./pages/DetailProduct";
-import router from "./routes";
 
 import "./App.css";
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  );
 }
 
 export default App;

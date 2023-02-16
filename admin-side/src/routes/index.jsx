@@ -4,6 +4,11 @@ import Layout from "../pages/Layout";
 import Dashboard from "../pages/Dashboard";
 import Categories from "../pages/Categories";
 import Login from "../pages/Login";
+import ImagePopup from "../components/ImagePopup";
+import AddProduct from "../pages/AddProduct";
+import EditProduct from "../pages/EditProduct";
+import AddCategory from "../pages/AddCategory";
+import RegisterAdmin from "../pages/RegisterAdmin";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +21,26 @@ const router = createBrowserRouter([
       {
         path: "/categories",
         element: <Categories />,
+      },
+      {
+        path: "/product/images",
+        element: <ImagePopup />,
+      },
+      {
+        path: "/product/add-product",
+        element: <AddProduct />,
+      },
+      {
+        path: "/product/edit-product",
+        element: <EditProduct />,
+      },
+      {
+        path: "/product/add-category",
+        element: <AddCategory />,
+      },
+      {
+        path: "/register-admin",
+        element: <RegisterAdmin />,
       },
     ],
   },

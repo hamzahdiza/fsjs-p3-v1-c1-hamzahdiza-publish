@@ -21,10 +21,12 @@ function Sidebar() {
               Categories
             </a>
           </NavLink>
-          <a href="tables.html" className="flex items-center text-white hover:opacity-100 py-4 pl-6 nav-item">
-            <i className="fas fa-table mr-3"></i>
-            Register Admin
-          </a>
+          <NavLink to={"register-admin"}>
+            <a href="tables.html" className="flex items-center text-white hover:opacity-100 py-4 pl-6 nav-item">
+              <i className="fas fa-table mr-3"></i>
+              Register Admin
+            </a>
+          </NavLink>
           <a href="forms.html" className="flex items-center text-white hover:opacity-100 py-4 pl-6 nav-item">
             <i className="fas fa-align-left mr-3"></i>
             Sign Out

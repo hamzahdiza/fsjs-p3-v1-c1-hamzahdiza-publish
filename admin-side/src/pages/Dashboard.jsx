@@ -1,11 +1,35 @@
 import { useState, useEffect } from "react";
-import useFetch from "../hooks/useFetch";
+// import useFetch from "../hooks/useFetch";
 import TableProduct from "../components/TableProduct";
-import ImagePopup from "../components/ImagePopup";
+// import ImagePopup from "../components/ImagePopup";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchProducts } from "../store/actions/actionCreator";
 
 function Dashboard() {
-  const dataProducts = useFetch("http://localhost:3000/products");
+  const { isLoading, products, errorMsg: error } = useSelector((state) => state.product);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    fetchProduct();
+  }, []);
+
+  const fetchProduct = async () => {
+    try {
+      await dispatch(fetchProducts());
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <section>
+        <h1 className="animate-pulse text-red-400 text-3xl">Loading ...</h1>
+      </section>
+    );
+  }
 
   return (
     <div className="Dashboard ">
@@ -37,9 +61,9 @@ function Dashboard() {
             </thead>
 
             <tbody className="divide-y divide-gray-200">
-              {dataProducts.data.map((product, index) => {
+              {/* {products.data.map((product, index) => {
                 return <TableProduct product={product} key={product.id} index={index} />;
-              })}
+              })} */}
               {/* {dataProducts.data.map((product) => {
                 <tr key={product.id}>
                   <td className="whitespace-nowrap px-4 py-2 text-gray-700 text-center">1</td>

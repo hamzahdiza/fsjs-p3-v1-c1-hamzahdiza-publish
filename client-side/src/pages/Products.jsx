@@ -24,20 +24,20 @@ function Products() {
   //   })();
   // }, []);
 
-  // useEffect(() => {
-  //   fetchProduct();
-  // }, []);
-
-  // const fetchProduct = async () => {
-  //   try {
-  //     await dispatch(fetchProducts());
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
   useEffect(() => {
-    dispatch(fetchProducts());
+    fetchProduct();
   }, []);
+
+  const fetchProduct = async () => {
+    try {
+      await dispatch(fetchProducts());
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  // useEffect(() => {
+  //   dispatch(fetchProducts());
+  // }, []);
 
   if (isLoading) {
     return (

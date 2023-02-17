@@ -1,4 +1,55 @@
+import { useEffect } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { loginAdmin } from "../store/actions/actionCreator";
+
 const Login = () => {
+  const [formLogin, setFormLogin] = useState({
+    email: "",
+    password: "",
+  });
+
+  const navigate = useNavigate();
+
+  // const { isLoading, products, errorMsg: error } = useSelector((state) => state.product);
+
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   loginAdminHandler();
+  // }, []);
+
+  const loginAdminHandler = async (dataLogin) => {
+    try {
+      await dispatch(loginAdmin(dataLogin));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const formLoginOnChangeHandler = (event) => {
+    const newObj = {
+      ...formLogin,
+    };
+
+    newObj[event.target.name] = event.target.value;
+
+    setFormLogin(newObj);
+
+    // console.log(formLogin.email);
+  };
+
+  const submitHandler = async (event) => {
+    event.preventDefault();
+    const dataLogin = {
+      ...formLogin,
+    };
+    // console.log(dataLogin, "////////////////////");
+    loginAdminHandler(dataLogin);
+    navigate("/");
+  };
+
   return (
     <div>
       <section class="bg-white">
@@ -41,13 +92,13 @@ const Login = () => {
                 <p class="mt-4 leading-relaxed text-gray-500">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi nam dolorum aliquam, quibusdam aperiam voluptatum.</p>
               </div>
 
-              <form action="#" class="mt-8 grid grid-cols-12 gap-12">
+              <form onSubmit={submitHandler} class="mt-8 grid grid-cols-12 gap-12">
                 <div class="col-span-12">
                   <label for="Email" class="block text-sm font-medium text-gray-700">
                     <p className="font-bold text-[25px] mb-3">Email</p>
                   </label>
 
-                  <input type="email" id="Email" name="email" class="mt-1 w-full rounded-md border-black-400 bg-[#ecedf1] text-[20px] font-bold text-black shadow-sm" />
+                  <input value={formLogin.email} onChange={formLoginOnChangeHandler} type="email" id="email" name="email" class="mt-1 w-full rounded-md border-black-400 bg-[#ecedf1] text-[20px] font-bold text-black shadow-sm" />
                 </div>
 
                 <div class="col-span-12">
@@ -55,11 +106,13 @@ const Login = () => {
                     <p className="font-bold text-[25px] mb-3">Password</p>
                   </label>
 
-                  <input type="email" id="Email" name="email" class="mt-1 w-full rounded-md border-black-400 bg-[#ecedf1] text-[20px] font-bold text-black shadow-sm" />
+                  <input value={formLogin.password} onChange={formLoginOnChangeHandler} type="password" id="password" name="password" class="mt-1 w-full rounded-md border-black-400 bg-[#ecedf1] text-[20px] font-bold text-black shadow-sm" />
                 </div>
 
                 <div class="items-center w-[645px]">
-                  <button class="w-[645px] inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">Login</button>
+                  <button type="submit" class="w-[645px] inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
+                    Login
+                  </button>
                 </div>
               </form>
             </div>

@@ -32,9 +32,9 @@ function Categories() {
             </thead>
 
             <tbody className="divide-y divide-gray-200">
-              {dataCategoris.data.map((category, index) => {
+              {/* {dataCategoris.data.map((category, index) => {
                 return <TableCategories category={category} key={category.id} index={index} />;
-              })}
+              })} */}
               {/* {dataProducts.data.map((product) => {
                 <tr key={product.id}>
                   <td className="whitespace-nowrap px-4 py-2 text-gray-700 text-center">1</td>

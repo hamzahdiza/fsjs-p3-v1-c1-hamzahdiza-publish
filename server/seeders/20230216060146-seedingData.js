@@ -1,4 +1,5 @@
 "use strict";
+const { hash } = require("../helpers/bcrypt");
 const fs = require("fs");
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -12,6 +13,14 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
+    let userData = JSON.parse(fs.readFileSync("./db/users.json", "utf-8"));
+    userData = userData.map((el) => {
+      el.createdAt = new Date();
+      el.updatedAt = new Date();
+      el.password = hash(el.password);
+      return el;
+    });
+
     let categoriesData = JSON.parse(fs.readFileSync("./db/categories.json", "utf-8"));
     categoriesData = categoriesData.map((el) => {
       el.createdAt = new Date();
@@ -43,6 +52,7 @@ module.exports = {
       return el;
     });
 
+    await queryInterface.bulkInsert("Users", userData, null);
     await queryInterface.bulkInsert("Categories", categoriesData, null);
     await queryInterface.bulkInsert("Products", productsData, null);
     await queryInterface.bulkInsert("Images", imagesData, null);

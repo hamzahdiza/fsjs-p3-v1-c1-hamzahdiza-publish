@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Product.belongsTo(models.User, { foreignKey: "authorId" });
-      Product.belongsTo(models.Category, { foreignKey: "categoryId" });
-      Product.hasMany(models.Image, { foreignKey: "productId" });
+      Product.belongsTo(models.User, { foreignKey: "authorId", onDelete: "cascade", onUpdate: "cascade" });
+      Product.belongsTo(models.Category, { foreignKey: "categoryId", onDelete: "cascade", onUpdate: "cascade" });
+      Product.hasMany(models.Image, { foreignKey: "productId", onDelete: "cascade", onUpdate: "cascade", hooks: true });
     }
   }
   Product.init(

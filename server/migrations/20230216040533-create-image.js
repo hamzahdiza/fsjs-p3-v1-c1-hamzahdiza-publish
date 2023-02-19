@@ -15,6 +15,8 @@ module.exports = {
           model: "Products",
           key: "id",
         },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       imgUrl: {
         type: Sequelize.TEXT,

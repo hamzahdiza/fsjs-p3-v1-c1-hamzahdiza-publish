@@ -51,12 +51,9 @@ class Controller {
       });
       // console.log(token);
       let sendUsernameForClient = userLogin.username;
-      let sendRoleForClient = userLogin.role;
 
       res.status(200).json({
         access_token,
-        sendUsernameForClient,
-        sendRoleForClient,
       });
       // res.status(200).json({ token });
     } catch (err) {
@@ -116,9 +113,9 @@ class Controller {
   static async postAddProducts(req, res, next) {
     const t = await sequelize.transaction();
     try {
-      const { name, description, price, mainImg, categoryId, imgUrl } = req.body;
+      const { name, description, price, mainImg, categoryId, images: imgUrl } = req.body;
       // console.log(imgUrl[0], "===", imgUrl[1]);
-
+      console.log(req.body);
       const addProduct = await Product.create(
         {
           name: name,
@@ -133,6 +130,7 @@ class Controller {
       );
 
       let looping = [];
+      console.log(imgUrl);
 
       looping = imgUrl.map((el) => {
         return { productId: addProduct.id, imgUrl: el };
@@ -157,10 +155,10 @@ class Controller {
           slug: slugProduct,
         },
       });
-
+      console.log(getIdProduct.id, "<<<<<<<<<<<<");
       const ProductyBySlug = await Product.findOne({
         where: {
-          slug: slugProduct,
+          id: getIdProduct.id,
         },
         include: [
           { model: Category },
@@ -188,14 +186,16 @@ class Controller {
     const t = await sequelize.transaction();
     try {
       const slugProduct = req.params.slugProduct;
-      // console.log(slugProduct);
-      const { name, description, price, mainImg, categoryId, imgUrl } = req.body;
+      // console.log(req.params.slugProduct);
+      const { name, description, price, mainImg, categoryId, images: imgUrl } = req.body;
+      // console.log(name, description, price, mainImg, categoryId, imgUrl);
 
       const getIdProduct = await Product.findOne({
         where: {
           slug: slugProduct,
         },
       });
+      console.log(getIdProduct);
 
       const editProduct = await Product.update(
         {
@@ -207,6 +207,15 @@ class Controller {
           categoryId: categoryId,
         },
         { where: { slug: slugProduct } },
+        { transaction: t }
+      );
+
+      const destroyPrevImage = await Image.destroy(
+        {
+          where: {
+            productId: getIdProduct.id,
+          },
+        },
         { transaction: t }
       );
 
@@ -238,39 +247,46 @@ class Controller {
   }
 
   static async deleteProductbySlug(req, res, next) {
+    const t = await sequelize.transaction();
     try {
-      const slugProduct = req.params.slugProduct;
-      const findProductSlug = await Product.findOne({
-        where: {
-          slug: slugProduct,
+      const idProduct = req.params.idProduct;
+
+      const findProductById = await Product.findOne(
+        {
+          where: {
+            id: idProduct,
+          },
         },
-      });
+        { transaction: t }
+      );
 
-      if (findProductSlug) {
-        const getIdProduct = await Product.findOne({
-          where: {
-            slug: slugProduct,
-          },
-        });
-
-        const destroyImages = await Image.destroy({
-          where: {
-            productId: getIdProduct.id,
-          },
-        });
-
-        const destroyProductSlug = await Product.destroy({
-          where: {
-            slug: slugProduct,
-          },
-        });
-        res.status(200).json({
-          message: `${findProductSlug.name} delete successfully`,
-        });
-      } else {
+      if (!findProductById) {
         throw { name: "data-not-found" };
       }
+
+      const destroyImages = await Image.destroy(
+        {
+          where: {
+            productId: idProduct,
+          },
+        },
+        { transaction: t }
+      );
+
+      const destroyProductById = await Product.destroy(
+        {
+          where: {
+            id: idProduct,
+          },
+        },
+        { transaction: t }
+      );
+      res.status(200).json({
+        message: `${findProductById.name} delete successfully`,
+      });
+      await t.commit();
     } catch (err) {
+      await t.rollback();
       console.log(err);
       next(err);
     }

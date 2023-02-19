@@ -7,7 +7,7 @@ router.use(authentication);
 router.get("/", Controller.getAllProducts);
 router.post("/", Controller.postAddProducts);
 router.get("/:slugProduct", Controller.getProductbySlug);
-router.delete("/:slugProduct", Controller.deleteProductbySlug);
+router.delete("/:idProduct", Controller.deleteProductbySlug);
 router.put("/:slugProduct", Controller.putEditProduct);
 router.get("/images/:slugProduct", Controller.getAllImagesBySlug);
 

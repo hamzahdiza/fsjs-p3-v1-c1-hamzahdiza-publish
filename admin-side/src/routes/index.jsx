@@ -34,7 +34,7 @@ const router = createBrowserRouter([
         element: <Categories />,
       },
       {
-        path: "/product/images",
+        path: "/product/images/:slugProduct",
         element: <ImagePopup />,
       },
       {
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
         element: <AddProduct />,
       },
       {
-        path: "/product/edit-product",
+        path: "/product/edit-product/:slugProduct",
         element: <EditProduct />,
       },
       {
@@ -58,6 +58,13 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+    loader: () => {
+      const access_token = localStorage.getItem("access_token");
+      if (access_token) {
+        return redirect("/");
+      }
+      return null;
+    },
   },
 ]);
 

@@ -19,10 +19,20 @@ module.exports = {
       return el;
     });
 
+    function slugGenerate(str) {
+      return str.split(" ").join("-");
+    }
+
     let productsData = JSON.parse(fs.readFileSync("./db/products.json", "utf-8"));
     productsData = productsData.map((el) => {
       el.createdAt = new Date();
       el.updatedAt = new Date();
+
+      const randomNumber = Math.floor(Math.random() * 1000);
+      const nameProduct = `${randomNumber} ${el.name}`;
+      const lowerCase = nameProduct.toLowerCase();
+      const createSlug = slugGenerate(lowerCase);
+      el.slug = createSlug;
       return el;
     });
 

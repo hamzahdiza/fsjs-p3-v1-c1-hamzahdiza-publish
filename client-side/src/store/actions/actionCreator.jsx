@@ -24,7 +24,7 @@ export const fetchProducts = () => {
     dispatch(productsFetchPending());
     console.log("Masuk fetch products");
     try {
-      const response = await fetch("http://localhost:3000/products");
+      const response = await fetch("http://localhost:3000/pub/products");
       const responseJson = await response.json();
       console.log(responseJson);
       dispatch(productsFetchSuccess(responseJson));
@@ -48,5 +48,21 @@ export const detailProductFetchReject = (errorMessage) => {
   return {
     type: DETAIL_PRODUCTS_FETCH_REJECT,
     payload: errorMessage,
+  };
+};
+
+export const fetchProductBySlug = (params) => {
+  return async (dispatch, getState) => {
+    dispatch(detailProductFetchPending());
+    console.log("Masuk fetch product By Slug");
+    console.log(params, "Slug Product <<<<<<<");
+    try {
+      const response = await fetch(`http://localhost:3000/pub/products/${params}`);
+      const responseJson = await response.json();
+      // console.log(responseJson);
+      dispatch(detailProductFetchSuccess(responseJson));
+    } catch (err) {
+      dispatch(detailProductFetchReject(err));
+    }
   };
 };

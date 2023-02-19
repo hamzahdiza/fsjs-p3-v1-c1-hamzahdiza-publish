@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function CardProduct({ product }) {
   return (
     <div className="CardProduct">
-      <Link to={`/product/${product.id}`}>
+      <Link to={`/product/${product.slug}`}>
         <li>
           <a className="block overflow-hidden group ">
             <img src={product.mainImg} className="w-[230px] h-[287px] object-cover" />

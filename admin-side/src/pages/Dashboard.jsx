@@ -1,46 +1,74 @@
 import { useState, useEffect } from "react";
-import useFetch from "../hooks/useFetch";
+// import useFetch from "../hooks/useFetch";
 import TableProduct from "../components/TableProduct";
-import ImagePopup from "../components/ImagePopup";
+// import ImagePopup from "../components/ImagePopup";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchProducts } from "../store/actions/actionCreator";
 
 function Dashboard() {
-  const dataProducts = useFetch("http://localhost:3000/products");
+  const { isLoading, products, errorMsg: error } = useSelector((state) => state.product);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    fetchProduct();
+  }, []);
+
+  const fetchProduct = async () => {
+    try {
+      await dispatch(fetchProducts());
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  console.log(products, "PPPPPPPPPPP");
+
+  if (isLoading) {
+    return (
+      <section>
+        <h1 className="animate-pulse text-red-400 text-3xl">Loading ...</h1>
+      </section>
+    );
+  }
 
   return (
     <div className="Dashboard ">
-      <div className="items-center mt-[60px] w-[1200px] p-8">
-        <div className="flex mb-5 w-[1200px]">
-          <h1 className="font-bold text-[45px] ml-7 my-auto">Dashboard</h1>
-          <div className="whitespace-nowrap px-2 py-2 text-gray-700 my-auto ml-[770px]">
-            <Link to={"/product/add-product"}>
-              <a href="#" className=" inline-block rounded bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-blue-700">
-                Add Product
-              </a>
-            </Link>
+      {error && <p>{error}</p>}
+      {!error && (
+        <div className="items-center mt-[60px] w-[1200px] p-8">
+          <div className="flex mb-5 w-[1200px]">
+            <h1 className="font-bold text-[45px] ml-7 my-auto">Dashboard</h1>
+            <div className="whitespace-nowrap px-2 py-2 text-gray-700 my-auto ml-[770px]">
+              <Link to={"/product/add-product"}>
+                <a href="#" className=" inline-block rounded bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-blue-700">
+                  Add Product
+                </a>
+              </Link>
+            </div>
           </div>
-        </div>
-        <div className="overflow-x-auto ml-7">
-          <table className="w-[1400px] divide-y-2 divide-gray-200 text-sm">
-            <thead>
-              <tr>
-                <th className="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900 text-center">No</th>
-                <th className="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900 text-center">Name</th>
-                <th className="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900 text-center">Category</th>
-                <th className="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900 text-center">Price</th>
-                <th className="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900 text-center">Created By</th>
-                <th className="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900 text-center">Main Image</th>
-                <th className="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900 text-center">Images</th>
-                <th className="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900 text-center">Action</th>
-                {/* <th className="px-4 py-2"></th> */}
-              </tr>
-            </thead>
+          <div className="overflow-x-auto ml-7">
+            <table className="w-[1400px] divide-y-2 divide-gray-200 text-sm">
+              <thead>
+                <tr>
+                  <th className="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900 text-center">No</th>
+                  <th className="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900 text-center">Name</th>
+                  <th className="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900 text-center">Category</th>
+                  <th className="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900 text-center">Price</th>
+                  <th className="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900 text-center">Created By</th>
+                  <th className="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900 text-center">Main Image</th>
+                  <th className="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900 text-center">Images</th>
+                  <th className="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900 text-center">Action</th>
+                  {/* <th className="px-4 py-2"></th> */}
+                </tr>
+              </thead>
 
-            <tbody className="divide-y divide-gray-200">
-              {dataProducts.data.map((product, index) => {
-                return <TableProduct product={product} key={product.id} index={index} />;
-              })}
-              {/* {dataProducts.data.map((product) => {
+              <tbody className="divide-y divide-gray-200">
+                {products.map((product, index) => {
+                  return <TableProduct product={product} key={product.id} index={index} />;
+                })}
+                {/* {dataProducts.data.map((product) => {
                 <tr key={product.id}>
                   <td className="whitespace-nowrap px-4 py-2 text-gray-700 text-center">1</td>
                   <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center">Erigo Kemeja Flannel Emily Cream</td>
@@ -65,11 +93,11 @@ function Dashboard() {
                   </td>
                 </tr>;
               })} */}
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-      {/* <ImagePopup /> */}
+      )}
     </div>
   );
 }

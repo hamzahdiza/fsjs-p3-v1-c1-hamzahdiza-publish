@@ -1,4 +1,6 @@
 import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
+import { redirect } from "react-router-dom";
+
 // import Sidebar from "../components/Sidebar";
 import Layout from "../pages/Layout";
 import Dashboard from "../pages/Dashboard";
@@ -13,6 +15,15 @@ import RegisterAdmin from "../pages/RegisterAdmin";
 const router = createBrowserRouter([
   {
     element: <Layout />,
+
+    loader: () => {
+      const access_token = localStorage.getItem("access_token");
+
+      if (!access_token) {
+        return redirect("/login");
+      }
+      return null;
+    },
     children: [
       {
         path: "/",
@@ -23,7 +34,7 @@ const router = createBrowserRouter([
         element: <Categories />,
       },
       {
-        path: "/product/images",
+        path: "/product/images/:slugProduct",
         element: <ImagePopup />,
       },
       {
@@ -31,7 +42,7 @@ const router = createBrowserRouter([
         element: <AddProduct />,
       },
       {
-        path: "/product/edit-product",
+        path: "/product/edit-product/:slugProduct",
         element: <EditProduct />,
       },
       {
@@ -47,6 +58,13 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+    loader: () => {
+      const access_token = localStorage.getItem("access_token");
+      if (access_token) {
+        return redirect("/");
+      }
+      return null;
+    },
   },
 ]);
 

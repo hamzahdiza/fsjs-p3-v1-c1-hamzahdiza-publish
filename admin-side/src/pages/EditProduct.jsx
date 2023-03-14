@@ -7,7 +7,7 @@ import { fetchProductBySlug } from "../store/actions/actionCreator";
 const EditProduct = () => {
   return (
     <div className="EditProduct w-[1500px] h-[100%] content-center mt-[70px]">
-      <p class="text-lg font-medium mx-auto">Edit Product</p>
+      <p class="ml-[550px] mt-10 font-bold text-[30px]">Edit Product</p>
 
       <FormAddEdit />
     </div>

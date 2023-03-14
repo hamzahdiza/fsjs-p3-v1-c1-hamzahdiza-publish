@@ -35,6 +35,9 @@ import {
   REGISTER_SUCCESS,
 } from "./actionType";
 
+const domain = "https://dizarsant.dizaerigop3c1.shop";
+const localhost = "http://localhost:3000";
+
 export const loginPending = () => ({
   type: LOGIN_PENDING,
 });
@@ -56,7 +59,7 @@ export const loginAdmin = (dataLogin) => {
     dispatch(loginPending());
     try {
       console.log(dataLogin, "<<<<<<<<<<<<<");
-      const response = await fetch("http://localhost:3000/users/login", {
+      const response = await fetch(`${localhost}/users/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -97,7 +100,7 @@ export const registerAdmin = (dataRegister) => {
     dispatch(registerPending());
     try {
       console.log(dataRegister, "<<<<<<<<<<<<<");
-      const response = await fetch("http://localhost:3000/users/register", {
+      const response = await fetch(`${localhost}/users/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -148,7 +151,7 @@ export const fetchProducts = () => {
     dispatch(productsFetchPending());
     console.log("Masuk fetch products");
     try {
-      const response = await fetch("http://localhost:3000/products", {
+      const response = await fetch(`${localhost}/products`, {
         method: "GET",
         headers: {
           access_token: localStorage.getItem("access_token"),
@@ -188,7 +191,7 @@ export const fetchImages = ({ slugProduct }) => {
     console.log("Masuk fetch Images");
     console.log(slugProduct);
     try {
-      const response = await fetch(`http://localhost:3000/products/images/${slugProduct}`, {
+      const response = await fetch(`${localhost}/products/images/${slugProduct}`, {
         method: "GET",
         headers: {
           access_token: localStorage.getItem("access_token"),
@@ -226,7 +229,7 @@ export const fetchProductBySlug = ({ slugProduct }) => {
     console.log("Masuk fetch product By Id");
     try {
       // console.log(slugProduct, "Slug Product <<<<<<<");
-      const response = await fetch(`http://localhost:3000/products/${slugProduct}`, {
+      const response = await fetch(`${localhost}/products/${slugProduct}`, {
         method: "GET",
         headers: {
           access_token: localStorage.getItem("access_token"),
@@ -281,7 +284,7 @@ export const postAdd = (dataToPost, params) => {
     dispatch(productPostPending());
     try {
       console.log(dataToPost, "<<<<<<<<<<<<<");
-      const response = await fetch(`http://localhost:3000/products`, {
+      const response = await fetch(`${localhost}/products`, {
         method: "POST",
         headers: {
           access_token: localStorage.getItem("access_token"),
@@ -321,7 +324,7 @@ export const postEdit = (dataToPost, params) => {
     dispatch(productPostSuccess());
     try {
       console.log(dataToPost, "<<<<<<<<<<<<<");
-      const response = await fetch(`http://localhost:3000/products/${params.slugProduct}`, {
+      const response = await fetch(`${localhost}/products/${params.slugProduct}`, {
         method: "PUT",
         headers: {
           access_token: localStorage.getItem("access_token"),
@@ -361,7 +364,7 @@ export const deleteProduct = (idProduct) => {
     console.log("Masuk Delete product By Id");
     console.log(idProduct);
     try {
-      const response = await fetch(`http://localhost:3000/products/${idProduct}`, {
+      const response = await fetch(`${localhost}/products/${idProduct}`, {
         method: "DELETE",
         headers: {
           access_token: localStorage.getItem("access_token"),
@@ -400,7 +403,7 @@ export const fetchCategories = () => {
     dispatch(categoriesFetchPending());
     // console.log("Masuk fetch Categpries");
     try {
-      const response = await fetch("http://localhost:3000/categories", {
+      const response = await fetch(`${localhost}/categories`, {
         method: "GET",
         headers: {
           access_token: localStorage.getItem("access_token"),
@@ -437,7 +440,7 @@ export const addCategory = (dataCategory) => {
     dispatch(categoryAddPending());
     try {
       console.log(dataCategory, "<<<<<<<<<<<<<");
-      const response = await fetch("http://localhost:3000/categories", {
+      const response = await fetch(`${localhost}/categories`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -475,7 +478,7 @@ export const deleteCategory = (idCategory) => {
     console.log("Masuk Delete product By Id", idCategory);
     console.log(idCategory);
     try {
-      const response = await fetch(`http://localhost:3000/categories/${idCategory}`, {
+      const response = await fetch(`${localhost}/categories/${idCategory}`, {
         method: "DELETE",
         headers: {
           access_token: localStorage.getItem("access_token"),

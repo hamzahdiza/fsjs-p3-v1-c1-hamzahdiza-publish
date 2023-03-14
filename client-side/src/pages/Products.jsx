@@ -153,7 +153,7 @@ function Products() {
               <div className="relative">
                 <details className="group [&_summary::-webkit-details-marker]:hidden">
                   <summary className="flex items-center gap-2 pb-1 text-gray-900 transition border-b border-gray-400 cursor-pointer hover:border-gray-600">
-                    <span className="text-lg font-bold"> Colors </span>
+                    <span className="text-lg font-bold"> Categories </span>
 
                     <span className="transition group-open:-rotate-180">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4">

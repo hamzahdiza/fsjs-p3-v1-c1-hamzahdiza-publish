@@ -1,5 +1,6 @@
 import { DETAIL_PRODUCTS_FETCH_PENDING, DETAIL_PRODUCTS_FETCH_REJECT, DETAIL_PRODUCTS_FETCH_SUCCESS, PRODUCTS_FETCH_PENDING, PRODUCTS_FETCH_REJECT, PRODUCTS_FETCH_SUCCESS } from "./actionType";
-
+const domain = "https://dizarsant.dizaerigop3c1.shop";
+const localhost = "http://localhost:3000";
 export const productsFetchPending = () => ({
   type: PRODUCTS_FETCH_PENDING,
 });
@@ -24,7 +25,7 @@ export const fetchProducts = () => {
     dispatch(productsFetchPending());
     console.log("Masuk fetch products");
     try {
-      const response = await fetch("http://localhost:3000/pub/products");
+      const response = await fetch(`${localhost}/pub/products`);
       const responseJson = await response.json();
       console.log(responseJson);
       dispatch(productsFetchSuccess(responseJson));
@@ -57,7 +58,7 @@ export const fetchProductBySlug = (params) => {
     console.log("Masuk fetch product By Slug");
     console.log(params, "Slug Product <<<<<<<");
     try {
-      const response = await fetch(`http://localhost:3000/pub/products/${params}`);
+      const response = await fetch(`${localhost}/pub/products/${params}`);
       const responseJson = await response.json();
       // console.log(responseJson);
       dispatch(detailProductFetchSuccess(responseJson));
